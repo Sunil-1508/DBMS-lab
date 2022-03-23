@@ -1,0 +1,118 @@
+SQL> create table employee
+  2  (
+  3  eid integer,
+  4  ename varchar2(30),
+  5  address varchar2(30),
+  6  phno integer,
+  7  primary key(eid),
+  8  unique(ename,address)
+  9  );
+
+Table created.
+SQL> create table department
+  2  (
+  3  did integer,
+  4  dname varchar2(20),
+  5  budget integer,
+  6  primary key(did)
+  7  );
+
+Table created.
+create table works_in
+(
+empid integer,
+did integer,
+since date,
+primary key(empid,did),
+foreign key(did) references department(did),
+foreign key(empid) references employee(eid)
+);
+Table created.
+
+SQL> insert into employee values(235,'ravi','abcd street',NULL);
+
+1 row created.
+
+SQL> insert into employee values(256,'raju','afgh street',NULL);
+
+1 row created.
+
+SQL> insert into employee values(287,'sunil','xyz street',32523);
+
+1 row created.
+
+SQL> select eid,ename from employee where phno IS NULL;
+
+       EID ENAME
+---------- ------------------------------
+       235 ravi
+       256 raju
+
+SQL> select eid,ename from employee where phno IS NOT NULL;
+
+       EID ENAME
+---------- ------------------------------
+       287 sunil
+
+SQL> 
+  1  update employee
+  2  set phno=52644
+  3* where eid=235
+SQL> /
+
+1 row updated.
+
+SQL> update employee
+  2  set phno=534357
+  3  where eid=256;
+
+1 row updated.
+
+SQL> select * from employee;
+
+       EID ENAME                          ADDRESS
+---------- ------------------------------ ---------------------
+      PHNO
+----------
+       235 ravi                           abcd street
+     52644
+
+       256 raju                           afgh streetinsert into 
+    534357
+
+       287 sunil                          xyz street
+     32523
+
+
+SQL> insert into department values( 34,'cse',30000);
+1 row created.
+SQL>  insert into works_in values(235,34,'23-MAR-22');
+1 row created.
+SQL> select * from works_in;
+
+     EMPID        DID SINCE
+---------- ---------- ---------
+       235         34 23-MAR-22
+SQL> select * from employee;
+
+       EID ENAME                          ADDRESS
+---------- ------------------------------ ---------------------
+      PHNO
+----------
+       235 ravi                           abcd street
+     52644
+
+       256 raju                           afgh street
+    534357
+
+       287 sunil                          xyz street
+     32523
+
+
+SQL> select * from department;
+
+       DID DNAME                    BUDGET
+---------- -------------------- ----------
+        34 cse                       30000
+
+SQL> 
